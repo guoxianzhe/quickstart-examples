@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import AgoraRTC from "agora-rtc-sdk-ng";
+import { AgoraRTCProvider } from "agora-rtc-react";
 
 import App from "./App";
 
