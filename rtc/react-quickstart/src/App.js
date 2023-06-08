@@ -9,15 +9,15 @@ import {
   useRemoteUsers,
   useRemoteVideoTracks,
 } from "./agora-rtc-react";
-import { useState } from "react";
+import React, { useState }  from 'react';
 
 import "./styles.css";
 import agoraLogo from "./agora-logo.svg";
 export const Basics = () => {
   const [calling, setCalling] = useState(false);
   const isConnected = useIsConnected();
-  const [appId, setAppId] = useState(""); //aab8b8f5a8cd4469a63042fcfafe7063
-  const [channel, setChannel] = useState(""); //agora-rtc-react-quickstart
+  const [appId, setAppId] = useState(""); 
+  const [channel, setChannel] = useState(""); 
   const [token, setToken] = useState("");
 
   useJoin({appid: appId, channel: channel, token: token ? token : null}, calling);
