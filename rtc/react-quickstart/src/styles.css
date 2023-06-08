@@ -1,6 +1,9 @@
+body{
+  margin:0;
+}
 .join-room {
     max-width: 380px;
-    margin: 100px auto;
+    margin: 0 auto;
     border-radius: 4px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     padding: 15px;
@@ -61,7 +64,6 @@
     box-shadow: none;
   }
   .room {
-    height: 100vh;
     padding-top: 100px;
   }
   .user-list {
@@ -116,6 +118,7 @@
     position: absolute;
     bottom: 0px;
     width: 100%;
+    box-sizing: border-box;
   }
   .left-control {
     padding-top: 0.75rem;
@@ -139,6 +142,7 @@
     color: inherit;
     width: 1.2em;
     height: 1.2em;
+    font-size: 1.2rem;
   }
   .i-microphone.off {
     opacity: 0.2;
@@ -153,6 +157,7 @@
     color: inherit;
     width: 1.2em;
     height: 1.2em;
+    font-size: 1.2rem;
   }
   .i-camera.off {
     opacity: 0.2;
