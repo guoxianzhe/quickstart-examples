@@ -1,7 +1,7 @@
 {
   "name": "agora-rtc-react-quickstart",
   "version": "1.0.0",
-  "description": "100ms js quickstart",
+  "description": "agora-rtc-react-quickstart",
   "main": "src/index.js",
   "author": "agora.io",
   "scripts": {
