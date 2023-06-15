@@ -103,6 +103,12 @@ export const Basics = () => {
               <i className={`i-camera ${!cameraOn ? "off" : ""}`} />
             </button>
           </div>
+          <button
+            className={`btn btn-phone ${calling ? "btn-phone-active" : ""}`}
+            onClick={() => setCalling(a => !a)}
+          >
+            {calling ? <i className="i-phone-hangup" /> : <i className="i-mdi-phone" />}
+          </button>
         </div>
       )}
     </>
