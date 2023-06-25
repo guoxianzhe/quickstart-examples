@@ -13,11 +13,11 @@ import React, { useState }  from 'react';
 
 import "./styles.css";
 import agoraLogo from "./agora-logo.svg";
-import AgoraRTC from "agora-rtc-sdk-ng";
+
 export const Basics = () => {
   const [calling, setCalling] = useState(false);
   const isConnected = useIsConnected();
-  const [appId, setAppId] = useState("aab8b8f5a8cd4469a63042fcfafe7063"); 
+  const [appId, setAppId] = useState(""); 
   const [channel, setChannel] = useState(""); 
   const [token, setToken] = useState("");
 
