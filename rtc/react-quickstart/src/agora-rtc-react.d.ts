@@ -1,4 +1,4 @@
-import { IAgoraRTCClient, ConnectionState, ConnectionDisconnectedReason, IAgoraRTCRemoteUser, UID, RemoteStreamType, ChannelMediaRelayState, ChannelMediaRelayError, ChannelMediaRelayEvent, NetworkQuality as NetworkQuality$1, ILocalTrack, IBufferSourceAudioTrack, AudioSourceState, ILocalVideoTrack, IRemoteTrack, IRemoteVideoTrack, IRemoteAudioTrack, ILocalAudioTrack, ICameraVideoTrack, MicrophoneAudioTrackInitConfig, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import { AgoraRTCErrorCode, IAgoraRTCClient, ConnectionState, ConnectionDisconnectedReason, IAgoraRTCRemoteUser, UID, RemoteStreamType, ChannelMediaRelayState, ChannelMediaRelayError, ChannelMediaRelayEvent, NetworkQuality as NetworkQuality$1, ILocalTrack, IBufferSourceAudioTrack, AudioSourceState, ILocalVideoTrack, IRemoteTrack, IRemoteVideoTrack, IRemoteAudioTrack, ILocalAudioTrack, ICameraVideoTrack, MicrophoneAudioTrackInitConfig, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
 import { useLayoutEffect, RefObject, Ref, ReactNode, HTMLProps, PropsWithChildren } from 'react';
 
 type Disposer = () => void;
@@ -16,96 +16,6 @@ declare class AgoraRTCError extends Error {
     toString(): string;
     print(level?: "error" | "warning"): AgoraRTCError;
     throw(): never;
-}
-declare enum AgoraRTCErrorCode {
-    UNEXPECTED_ERROR = "UNEXPECTED_ERROR",
-    UNEXPECTED_RESPONSE = "UNEXPECTED_RESPONSE",
-    TIMEOUT = "TIMEOUT",
-    INVALID_PARAMS = "INVALID_PARAMS",
-    NOT_READABLE = "NOT_READABLE",
-    NOT_SUPPORTED = "NOT_SUPPORTED",
-    INVALID_OPERATION = "INVALID_OPERATION",
-    OPERATION_ABORTED = "OPERATION_ABORTED",
-    WEB_SECURITY_RESTRICT = "WEB_SECURITY_RESTRICT",
-    EXCHANGE_SDP_FAILED = "EXCHANGE_SDP_FAILED",
-    NETWORK_ERROR = "NETWORK_ERROR",
-    NETWORK_TIMEOUT = "NETWORK_TIMEOUT",
-    NETWORK_RESPONSE_ERROR = "NETWORK_RESPONSE_ERROR",
-    API_INVOKE_TIMEOUT = "API_INVOKE_TIMEOUT",
-    ENUMERATE_DEVICES_FAILED = "ENUMERATE_DEVICES_FAILED",
-    DEVICE_NOT_FOUND = "DEVICE_NOT_FOUND",
-    ELECTRON_IS_NULL = "ELECTRON_IS_NULL",
-    ELECTRON_DESKTOP_CAPTURER_GET_SOURCES_ERROR = "ELECTRON_DESKTOP_CAPTURER_GET_SOURCES_ERROR",
-    CHROME_PLUGIN_NO_RESPONSE = "CHROME_PLUGIN_NO_RESPONSE",
-    CHROME_PLUGIN_NOT_INSTALL = "CHROME_PLUGIN_NOT_INSTALL",
-    MEDIA_OPTION_INVALID = "MEDIA_OPTION_INVALID",
-    PERMISSION_DENIED = "PERMISSION_DENIED",
-    CONSTRAINT_NOT_SATISFIED = "CONSTRAINT_NOT_SATISFIED",
-    TRACK_IS_DISABLED = "TRACK_IS_DISABLED",
-    GET_VIDEO_ELEMENT_VISIBLE_ERROR = "GET_VIDEO_ELEMENT_VISIBLE_ERROR",
-    SHARE_AUDIO_NOT_ALLOWED = "SHARE_AUDIO_NOT_ALLOWED",
-    LOW_STREAM_ENCODING_ERROR = "LOW_STREAM_ENCODING_ERROR",
-    SET_ENCODING_PARAMETER_ERROR = "SET_ENCODING_PARAMETER_ERROR",
-    TRACK_STATE_UNREACHABLE = "TRACK_STATE_UNREACHABLE",
-    INVALID_UINT_UID_FROM_STRING_UID = "INVALID_UINT_UID_FROM_STRING_UID",
-    CAN_NOT_GET_PROXY_SERVER = "CAN_NOT_GET_PROXY_SERVER",
-    CAN_NOT_GET_GATEWAY_SERVER = "CAN_NOT_GET_GATEWAY_SERVER",
-    VOID_GATEWAY_ADDRESS = "VOID_GATEWAY_ADDRESS",
-    UID_CONFLICT = "UID_CONFLICT",
-    MULTI_UNILBS_RESPONSE_ERROR = "MULTI_UNILBS_RESPONSE_ERROR",
-    UPDATE_TICKET_FAILED = "UPDATE_TICKET_FAILED",
-    INVALID_LOCAL_TRACK = "INVALID_LOCAL_TRACK",
-    INVALID_TRACK = "INVALID_TRACK",
-    SENDER_NOT_FOUND = "SENDER_NOT_FOUND",
-    CREATE_OFFER_FAILED = "CREATE_OFFER_FAILED",
-    SET_ANSWER_FAILED = "SET_ANSWER_FAILED",
-    ICE_FAILED = "ICE_FAILED",
-    PC_CLOSED = "PC_CLOSED",
-    SENDER_REPLACE_FAILED = "SENDER_REPLACE_FAILED",
-    GET_LOCAL_CAPABILITIES_FAILED = "GET_LOCAL_CAPABILITIES_FAILED",
-    GET_LOCAL_CONNECTION_PARAMS_FAILED = "GET_LOCAL_CONNECTION_PARAMS_FAILED",
-    SUBSCRIBE_FAILED = "SUBSCRIBE_FAILED",
-    UNSUBSCRIBE_FAILED = "UNSUBSCRIBE_FAILED",
-    GATEWAY_P2P_LOST = "GATEWAY_P2P_LOST",
-    NO_ICE_CANDIDATE = "NO_ICE_CANDIDATE",
-    CAN_NOT_PUBLISH_MULTIPLE_VIDEO_TRACKS = "CAN_NOT_PUBLISH_MULTIPLE_VIDEO_TRACKS",
-    EXIST_DISABLED_VIDEO_TRACK = "EXIST_DISABLED_VIDEO_TRACK",
-    INVALID_REMOTE_USER = "INVALID_REMOTE_USER",
-    REMOTE_USER_IS_NOT_PUBLISHED = "REMOTE_USER_IS_NOT_PUBLISHED",
-    CUSTOM_REPORT_SEND_FAILED = "CUSTOM_REPORT_SEND_FAILED",
-    CUSTOM_REPORT_FREQUENCY_TOO_HIGH = "CUSTOM_REPORT_FREQUENCY_TOO_HIGH",
-    FETCH_AUDIO_FILE_FAILED = "FETCH_AUDIO_FILE_FAILED",
-    READ_LOCAL_AUDIO_FILE_ERROR = "READ_LOCAL_AUDIO_FILE_ERROR",
-    DECODE_AUDIO_FILE_FAILED = "DECODE_AUDIO_FILE_FAILED",
-    WS_ABORT = "WS_ABORT",
-    WS_DISCONNECT = "WS_DISCONNECT",
-    WS_ERR = "WS_ERR",
-    LIVE_STREAMING_TASK_CONFLICT = "LIVE_STREAMING_TASK_CONFLICT",
-    LIVE_STREAMING_INVALID_ARGUMENT = "LIVE_STREAMING_INVALID_ARGUMENT",
-    LIVE_STREAMING_INTERNAL_SERVER_ERROR = "LIVE_STREAMING_INTERNAL_SERVER_ERROR",
-    LIVE_STREAMING_PUBLISH_STREAM_NOT_AUTHORIZED = "LIVE_STREAMING_PUBLISH_STREAM_NOT_AUTHORIZED",
-    LIVE_STREAMING_TRANSCODING_NOT_SUPPORTED = "LIVE_STREAMING_TRANSCODING_NOT_SUPPORTED",
-    LIVE_STREAMING_CDN_ERROR = "LIVE_STREAMING_CDN_ERROR",
-    LIVE_STREAMING_INVALID_RAW_STREAM = "LIVE_STREAMING_INVALID_RAW_STREAM",
-    LIVE_STREAMING_WARN_STREAM_NUM_REACH_LIMIT = "LIVE_STREAMING_WARN_STREAM_NUM_REACH_LIMIT",
-    LIVE_STREAMING_WARN_FAILED_LOAD_IMAGE = "LIVE_STREAMING_WARN_FAILED_LOAD_IMAGE",
-    LIVE_STREAMING_WARN_FREQUENT_REQUEST = "LIVE_STREAMING_WARN_FREQUENT_REQUEST",
-    WEBGL_INTERNAL_ERROR = "WEBGL_INTERNAL_ERROR",
-    BEAUTY_PROCESSOR_INTERNAL_ERROR = "BEAUTY_PROCESSOR_INTERNAL_ERROR",
-    CROSS_CHANNEL_WAIT_STATUS_ERROR = "CROSS_CHANNEL_WAIT_STATUS_ERROR",
-    CROSS_CHANNEL_FAILED_JOIN_SRC = "CROSS_CHANNEL_FAILED_JOIN_SEC",
-    CROSS_CHANNEL_FAILED_JOIN_DEST = "CROSS_CHANNEL_FAILED_JOIN_DEST",
-    CROSS_CHANNEL_FAILED_PACKET_SENT_TO_DEST = "CROSS_CHANNEL_FAILED_PACKET_SENT_TO_DEST",
-    CROSS_CHANNEL_SERVER_ERROR_RESPONSE = "CROSS_CHANNEL_SERVER_ERROR_RESPONSE",
-    METADATA_OUT_OF_RANGE = "METADATA_OUT_OF_RANGE",
-    LOCAL_AEC_ERROR = "LOCAL_AEC_ERROR",
-    INVALID_PLUGIN = "INVALID_PLUGIN",
-    DISCONNECT_P2P = "DISCONNECT_P2P",
-    INIT_WEBSOCKET_TIMEOUT = "INIT_WEBSOCKET_TIMEOUT",
-    CONVERTING_IMAGEDATA_TO_BLOB_FAILED = "CONVERTING_IMAGEDATA_TO_BLOB_FAILED",
-    CONVERTING_VIDEO_FRAME_TO_BLOB_FAILED = "CONVERTING_VIDEO_FRAME_TO_BLOB_FAILED",
-    INIT_DATACHANNEL_TIMEOUT = "INIT_DATACHANNEL_TIMEOUT",
-    DATACHANNEL_CONNECTION_TIMEOUT = "DATACHANNEL_CONNECTION_TIMEOUT"
 }
 declare enum InspectState {
     CONNECTING = "CONNECTING",
@@ -606,6 +516,7 @@ declare function useAwaited<T>(promise: MaybePromise<T>): T | undefined;
  * During the side-effect running/removing, if multiple effects are triggered, only the last one will be executed.
  */
 declare function useAsyncEffect(effect: () => MaybePromise<void | (() => MaybePromise<void>)>, deps?: ReadonlyArray<unknown>): void;
+declare function compareVersion(v1: string, v2: string): number;
 
 /**
  * Occurs when the state of the connection between the SDK and the server changes.
@@ -932,16 +843,38 @@ declare function useTrackEvent(track: Nullable<IRemoteTrack>, event: "first-fram
  */
 declare function useTrackEvent(track: Nullable<IRemoteVideoTrack>, event: "video-element-visible-status", listener: Nullable<(data?: CheckVideoVisibleResult) => void>): void;
 
+type printType = "log" | "warn" | "error" | "info";
+interface IAgoraRTCReactError extends Error {
+    readonly rtcMethod: string;
+    readonly rtcError: AgoraRTCError | string;
+    log: (type: printType) => void;
+}
+declare class AgoraRTCReactError extends Error implements IAgoraRTCReactError {
+    readonly rtcMethod: string;
+    readonly rtcError: AgoraRTCError | string;
+    readonly name: string;
+    constructor(rtcMethod: string, rtcError: AgoraRTCError | string);
+    log(type: printType): void;
+}
+
 /**
  * Auto-subscribe and get remote user video track.
  * Unsubscribe track on unmount.
  */
-declare function useRemoteUserTrack(user: IAgoraRTCRemoteUser | undefined, mediaType: "video", client?: IAgoraRTCClient | null): IRemoteVideoTrack | undefined;
+declare function useRemoteUserTrack(user: IAgoraRTCRemoteUser | undefined, mediaType: "video", client?: IAgoraRTCClient | null): {
+    track: IRemoteVideoTrack | undefined;
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * Auto-subscribe and get remote user audio track.
  * Unsubscribe track on unmount.
  */
-declare function useRemoteUserTrack(user: IAgoraRTCRemoteUser | undefined, mediaType: "audio", client?: IAgoraRTCClient | null): IRemoteAudioTrack | undefined;
+declare function useRemoteUserTrack(user: IAgoraRTCRemoteUser | undefined, mediaType: "audio", client?: IAgoraRTCClient | null): {
+    track: IRemoteAudioTrack | undefined;
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * Reports volume of a videoTrack every second.
  *
@@ -953,29 +886,48 @@ declare function useVolumeLevel(audioTrack?: IRemoteAudioTrack | ILocalAudioTrac
  * Auto-subscribe and get remote user audio track.
  * Unsubscribe track on unmount.
  */
-declare function useRemoteAudioTracks(users: IAgoraRTCRemoteUser[] | undefined, client?: IAgoraRTCClient | null): IRemoteAudioTrack[];
+declare function useRemoteAudioTracks(users: IAgoraRTCRemoteUser[] | undefined, client?: IAgoraRTCClient | null): {
+    audioTracks: IRemoteAudioTrack[];
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * Auto-subscribe and get remote user video track.
  * Unsubscribe track on unmount.
  */
-declare function useRemoteVideoTracks(users: IAgoraRTCRemoteUser[] | undefined, client?: IAgoraRTCClient | null): IRemoteVideoTrack[];
+declare function useRemoteVideoTracks(users: IAgoraRTCRemoteUser[] | undefined, client?: IAgoraRTCClient | null): {
+    videoTracks: IRemoteVideoTrack[];
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * a hook can create a local video track, this track will only be created once until Component is destroyed.
  * when you ready to create track, set ready to true.
  * unpublish track on unmount.
  */
-declare function useLocalCameraTrack(ready?: boolean, client?: IAgoraRTCClient): ICameraVideoTrack | null;
+declare function useLocalCameraTrack(ready?: boolean, client?: IAgoraRTCClient): {
+    localCameraTrack: ICameraVideoTrack | null;
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * a hook can create a local audio track, this track will only be created once until Component is destroyed.
  * when you ready to create track, set ready to true.
  * close track on unmount.
  */
-declare function useLocalAudioTrack(ready?: boolean, audioTrackConfig?: MicrophoneAudioTrackInitConfig, client?: IAgoraRTCClient): IMicrophoneAudioTrack | null;
+declare function useLocalMicrophoneTrack(ready?: boolean, audioTrackConfig?: MicrophoneAudioTrackInitConfig, client?: IAgoraRTCClient): {
+    localMicrophoneTrack: IMicrophoneAudioTrack | null;
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 /**
  * publish tacks when readyToPublish is true
  * unpublish on unmount.
  */
-declare function usePublish(tracks: (ILocalTrack | null)[], readyToPublish?: boolean, client?: IAgoraRTCClient): void;
+declare function usePublish(tracks: (ILocalTrack | null)[], readyToPublish?: boolean, client?: IAgoraRTCClient): {
+    isLoading: boolean;
+    error: AgoraRTCReactError | null;
+};
 
 declare function useConnectionState(client?: IAgoraRTCClient | null): ConnectionState;
 declare function useIsConnected(client?: IAgoraRTCClient | null): boolean;
@@ -1023,14 +975,13 @@ interface NetworkQuality {
  * After the local user joins the channel, the SDK triggers this callback to report the uplink and downlink network conditions of the local user once every two second.
  */
 declare function useNetworkQuality(client?: IAgoraRTCClient | null): NetworkQuality;
-declare function useAutoJoin(appid: string, channel: string, token: string | null, uid?: UID | null, client?: IAgoraRTCClient | null): void;
-interface joinOptions {
+interface JoinOptions {
     appid: string;
     channel: string;
     token: string | null;
     uid?: UID | null;
 }
-type FetchArgs = (() => Promise<joinOptions>) | joinOptions;
+type FetchArgs = (() => Promise<JoinOptions>) | JoinOptions;
 /**
  * a hook to join rtc channel
  * unmount will leave channel and close all tracks
@@ -1038,50 +989,42 @@ type FetchArgs = (() => Promise<joinOptions>) | joinOptions;
  * @param ready
  * @param client
  */
-declare function useJoin(fetchArgs: FetchArgs, ready?: boolean, client?: IAgoraRTCClient | null): void;
+declare function useJoin(fetchArgs: FetchArgs, ready?: boolean, client?: IAgoraRTCClient | null): {
+    data: UID;
+    isLoading: boolean;
+    isConnected: boolean;
+    error: AgoraRTCReactError | null;
+};
 
 /**
- * Occurs when a remote user becomes online or offline. (client `user-join` and `user-left` events)
+ * Occurs when a remote user becomes online or offline. (client `user-join`, `user-left`, `user-published` and `user-unpublished` events)
  *
  * Updated when one of the following situations occurs:
  * - In a communication channel:
  *   - A remote user joins or leaves the channel.
+ *   - A remote user published or unpublished the channel.
  *   - A remote user has dropped offline or rejoins the channel after a network interruption.
  * - In a live-broadcast channel:
  *   - A remote host joins or leaves the channel.
+ *   - A remote host published or unpublished the channel.
  *   - A remote host has dropped offline or rejoins the channel after a network interruption.
  *   - A remote host/user switches the client role between host and audience.
  *
  * ```jsx
  * const remoteUsers = useRemoteUsers(client)
+ * const publishedUsers = remoteUsers.filter(user => user.hasAudio || user.hasVideo);
  * return remoteUsers.map(user => (
  *   <li key={user.uid}>{getUserName(user.uid)}</li>
  * ))
  * ```
  */
 declare function useRemoteUsers(client?: IAgoraRTCClient | null): IAgoraRTCRemoteUser[];
-/**
- * Updated when a remote user publishes or unpublishes an audio or video track. (client `user-published` and `user-unpublished` events)
- *
- * ```jsx
- * const publishedUsers = usePublishedUsers(client)
- * return publishedUsers.map(user => (
- *   <RemoteUser key={user.uid} user={user} />
- * ))
- * ```
- */
-declare function usePublishedRemoteUsers(client?: IAgoraRTCClient | null): IAgoraRTCRemoteUser[];
 
 interface AgoraRTCProviderProps {
     readonly client: IAgoraRTCClient;
     readonly children?: ReactNode;
 }
 declare function AgoraRTCProvider({ client, children }: AgoraRTCProviderProps): JSX.Element;
-/**
- * Get a Agora RTC client from context.
- * @param client If a client is provided, it will be used instead.
- */
-declare function useOptionalRTCClient(client?: IAgoraRTCClient | null): IAgoraRTCClient | null;
 /**
  * Get a Agora RTC client from context. Throws error if client not found.
  * @param client If a client is provided, it will be used instead.
@@ -1108,7 +1051,7 @@ interface LocalAudioTrackProps {
      */
     readonly play?: boolean;
     /**
-     * The volume. The value ranges from 0 (mute) to 100 (maximum). A value of 100 is the current volume.
+     * The volume. The value ranges from 0 (mute) to 1000 (maximum). A value of 100 is the current volume.
      */
     readonly volume?: number;
     /**
@@ -1312,7 +1255,7 @@ interface RemoteAudioTrackProps {
      */
     readonly playbackDeviceId?: string;
     /**
-     * The volume. The value ranges from 0 (mute) to 100 (maximum). A value of 100 is the current volume.
+     * The volume. The value ranges from 0 (mute) to 1000 (maximum). A value of 100 is the current volume.
      */
     readonly volume?: number;
     readonly children?: ReactNode;
@@ -1359,7 +1302,7 @@ interface RemoteUserProps extends HTMLProps<HTMLDivElement> {
      */
     readonly playbackDeviceId?: string;
     /**
-     * The volume. The value ranges from 0 (mute) to 100 (maximum). A value of 100 is the current volume.
+     * The volume. The value ranges from 0 (mute) to 1000 (maximum). A value of 100 is the current volume.
      */
     readonly volume?: number;
     /**
@@ -1437,4 +1380,6 @@ interface RemoteVideoPlayerProps extends HTMLProps<HTMLDivElement> {
  */
 declare function RemoteVideoPlayer({ track, playVideo, cover, client, style, children, ...props }: RemoteVideoPlayerProps): JSX.Element;
 
-export { AgoraRTCError, AgoraRTCErrorCode, AgoraRTCProvider, AgoraRTCProviderProps, AgoraRTCScreenShareProvider, AgoraRTCScreenShareProviderProps, CameraVideoTrack, CameraVideoTrackProps, CheckVideoVisibleResult, FetchArgs, InspectState, Listenable, LocalAudioTrack, LocalAudioTrackProps, LocalMicrophoneAndCameraUser, LocalMicrophoneAndCameraUserProps, LocalUser, LocalUserProps, LocalVideoTrack, LocalVideoTrackProps, MicrophoneAudioTrack, MicrophoneAudioTrackProps, NetworkQuality, RemoteAudioTrack, RemoteAudioTrackProps, RemoteUser, RemoteUserProps, RemoteVideoPlayer, RemoteVideoPlayerProps, RemoteVideoTrack, RemoteVideoTrackProps, TrackBoundary, VisibleHiddenReason, applyRef, isPromise, joinOptions, listen, useAsyncEffect, useAutoJoin, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalAudioTrack, useLocalCameraTrack, useNetworkQuality, useOptionalRTCClient, usePublish, usePublishedRemoteUsers, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };
+declare const VERSION = "1.1.0";
+
+export { AgoraRTCError, AgoraRTCProvider, AgoraRTCProviderProps, AgoraRTCScreenShareProvider, AgoraRTCScreenShareProviderProps, CameraVideoTrack, CameraVideoTrackProps, CheckVideoVisibleResult, FetchArgs, InspectState, JoinOptions, Listenable, LocalAudioTrack, LocalAudioTrackProps, LocalMicrophoneAndCameraUser, LocalMicrophoneAndCameraUserProps, LocalUser, LocalUserProps, LocalVideoTrack, LocalVideoTrackProps, MicrophoneAudioTrack, MicrophoneAudioTrackProps, NetworkQuality, RemoteAudioTrack, RemoteAudioTrackProps, RemoteUser, RemoteUserProps, RemoteVideoPlayer, RemoteVideoPlayerProps, RemoteVideoTrack, RemoteVideoTrackProps, TrackBoundary, VERSION, VisibleHiddenReason, applyRef, compareVersion, isPromise, listen, useAsyncEffect, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalCameraTrack, useLocalMicrophoneTrack, useNetworkQuality, usePublish, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };

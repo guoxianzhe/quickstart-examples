@@ -3,7 +3,7 @@ import {
   RemoteVideoPlayer,
   useIsConnected,
   useJoin,
-  useLocalAudioTrack,
+  useLocalMicrophoneTrack,
   useLocalCameraTrack,
   usePublish,
   useRemoteUsers,
@@ -13,10 +13,11 @@ import React, { useState }  from 'react';
 
 import "./styles.css";
 import agoraLogo from "./agora-logo.svg";
+import AgoraRTC from "agora-rtc-sdk-ng";
 export const Basics = () => {
   const [calling, setCalling] = useState(false);
   const isConnected = useIsConnected();
-  const [appId, setAppId] = useState(""); 
+  const [appId, setAppId] = useState("aab8b8f5a8cd4469a63042fcfafe7063"); 
   const [channel, setChannel] = useState(""); 
   const [token, setToken] = useState("");
 
@@ -25,13 +26,12 @@ export const Basics = () => {
   //local user
   const [micOn, setMic] = useState(false);
   const [cameraOn, setCamera] = useState(false);
-  const audioTrack = useLocalAudioTrack(micOn);
-  const videoTrack = useLocalCameraTrack(cameraOn);
-  usePublish([audioTrack, videoTrack]);
-
+  const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
+  const { localCameraTrack } = useLocalCameraTrack(cameraOn);
+  usePublish([localMicrophoneTrack, localCameraTrack]);
   //remote users
   const remoteUsers = useRemoteUsers();
-  const videoTracks = useRemoteVideoTracks(remoteUsers);
+  const { videoTracks } = useRemoteVideoTracks(remoteUsers);
 
   return (
     <>
@@ -40,13 +40,13 @@ export const Basics = () => {
           <div className="user-list">
             <div className="user">
               <LocalMicrophoneAndCameraUser
-                audioTrack={audioTrack}
+                audioTrack={localMicrophoneTrack}
                 cameraOn={cameraOn}
                 cover={
                   "https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg"
                 }
                 micOn={micOn}
-                videoTrack={videoTrack}
+                videoTrack={localCameraTrack}
               >
                 <samp className="user-name">You</samp>
               </LocalMicrophoneAndCameraUser>

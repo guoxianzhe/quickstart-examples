@@ -2398,10 +2398,10 @@ agent-base@6:
   dependencies:
     debug "4"
 
-agora-rtc-sdk-ng@^4.1.0:
-  version "4.17.2"
-  resolved "https://registry.npmmirror.com/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.17.2.tgz#acf889ce33a6e923c47730b21d1383f829647eb7"
-  integrity sha512-ErIHOYgf3R/ya3gVCCBKRw3RMdATmoM/8aUGOob4g0VHBBkVDEf9JT0RW2jQgtwm61jszWof+wo2duQDBgTfpw==
+agora-rtc-sdk-ng@4.18.0:
+  version "4.18.0"
+  resolved "https://registry.npmmirror.com/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.18.0.tgz#346eba88ff4c1e2d6ed75e4a48964ba436a2f899"
+  integrity sha512-BZgAwMgOkPfjIvYNsJl+7/aqFAkdcxvrh2BfDxDdDVm50hF/cQn7jqb34dFQq2jFYuUB+792RXMCLA4zjX6y9g==
   dependencies:
     agora-rte-extension "^1.2.3"
 
