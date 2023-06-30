@@ -829,7 +829,16 @@ function usePublish(tracks, readyToPublish = true, client) {
     }
     const filterTracks = tracks.filter(Boolean);
     const baseCheck = (_track) => {
-      return compareVersion(AgoraRTC.VERSION, "4.18.1") >= 0 ? (
+      const isSupport = compareVersion(AgoraRTC.VERSION, "4.18.1") >= 0;
+      if (!isSupport) {
+        const agoraRTCReactError = new AgoraRTCReactError(
+          "usePublish",
+          "please check your agora-rtc-sdk-ng version in package.json, it's recommend upgrade to >= 4.18.1"
+        );
+        agoraRTCReactError.log("warn");
+      }
+      return isSupport ? (
+        // @ts-ignore
         resolvedClient.mode !== "live" || resolvedClient.role !== "audience"
       ) : true;
     };
@@ -1045,28 +1054,6 @@ function LocalVideoTrack({
   }, [muted, track]);
   return /* @__PURE__ */ jsx("div", { ...props, ref: setDiv, style: mergedStyle });
 }
-function MicrophoneAudioTrack({
-  track: maybeTrack,
-  deviceId,
-  ...props
-}) {
-  const track = useAwaited(maybeTrack);
-  useEffect(() => {
-    if (track && deviceId != null) {
-      track.setDevice(deviceId).catch(console.warn);
-    }
-  }, [deviceId, track]);
-  return /* @__PURE__ */ jsx(LocalAudioTrack, { track: maybeTrack, ...props });
-}
-function CameraVideoTrack({ track: maybeTrack, deviceId, ...props }) {
-  const track = useAwaited(maybeTrack);
-  useEffect(() => {
-    if (track && deviceId != null) {
-      track.setDevice(deviceId).catch(console.warn);
-    }
-  }, [deviceId, track]);
-  return /* @__PURE__ */ jsx(LocalVideoTrack, { track: maybeTrack, ...props });
-}
 var CoverBlurStyle = {
   width: "100%",
   height: "100%",
@@ -1090,48 +1077,6 @@ function UserCover({ cover }) {
     /* @__PURE__ */ jsx("div", { style: { ...CoverBlurStyle, backgroundImage: `url(${cover})` } }),
     /* @__PURE__ */ jsx("img", { src: cover, style: CoverImgStyle })
   ] }) : cover() });
-}
-function LocalMicrophoneAndCameraUser({
-  micOn,
-  cameraOn,
-  audioTrack,
-  videoTrack,
-  playAudio,
-  playVideo,
-  micDeviceId,
-  cameraDeviceId,
-  volume,
-  cover,
-  children,
-  style,
-  ...props
-}) {
-  const mergedStyle = useMergedStyle(VideoTrackWrapperStyle, style);
-  playVideo = playVideo ?? !!cameraOn;
-  playAudio = playAudio ?? !!micOn;
-  return /* @__PURE__ */ jsxs("div", { ...props, style: mergedStyle, children: [
-    /* @__PURE__ */ jsx(
-      CameraVideoTrack,
-      {
-        deviceId: cameraDeviceId,
-        disabled: !cameraOn,
-        play: playVideo,
-        track: videoTrack
-      }
-    ),
-    /* @__PURE__ */ jsx(
-      MicrophoneAudioTrack,
-      {
-        deviceId: micDeviceId,
-        disabled: !micOn,
-        play: playAudio,
-        track: audioTrack,
-        volume
-      }
-    ),
-    cover && !cameraOn && /* @__PURE__ */ jsx(UserCover, { cover }),
-    /* @__PURE__ */ jsx("div", { style: FloatBoxStyle, children })
-  ] });
 }
 function LocalUser({
   micOn,
@@ -1213,27 +1158,6 @@ function RemoteUser({
     /* @__PURE__ */ jsx("div", { style: FloatBoxStyle, children })
   ] });
 }
-function RemoteVideoPlayer({
-  track,
-  playVideo,
-  cover,
-  client,
-  style,
-  children,
-  ...props
-}) {
-  const mergedStyle = useMergedStyle(VideoTrackWrapperStyle, style);
-  const resolvedClient = useRTCClient(client);
-  const hasVideo = resolvedClient.remoteUsers?.find(
-    (user) => user.uid === track?.getUserId()
-  )?.hasVideo;
-  playVideo = playVideo ?? hasVideo;
-  return /* @__PURE__ */ jsxs("div", { ...props, style: mergedStyle, children: [
-    /* @__PURE__ */ jsx(RemoteVideoTrack, { play: playVideo, track }),
-    cover && !playVideo && /* @__PURE__ */ jsx(UserCover, { cover }),
-    /* @__PURE__ */ jsx("div", { style: FloatBoxStyle, children })
-  ] });
-}
 var AgoraRTCReact = class {
   appType = 1001;
   constructor() {
@@ -1243,4 +1167,4 @@ var AgoraRTCReact = class {
 new AgoraRTCReact();
 var VERSION = "1.1.0";
 
-export { AgoraRTCProvider, AgoraRTCScreenShareProvider, CameraVideoTrack, LocalAudioTrack, LocalMicrophoneAndCameraUser, LocalUser, LocalVideoTrack, MicrophoneAudioTrack, RemoteAudioTrack, RemoteUser, RemoteVideoPlayer, RemoteVideoTrack, TrackBoundary, VERSION, applyRef, compareVersion, isPromise, listen, useAsyncEffect, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalCameraTrack, useLocalMicrophoneTrack, useNetworkQuality, usePublish, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };
+export { AgoraRTCProvider, AgoraRTCReactError, AgoraRTCScreenShareProvider, LocalAudioTrack, LocalUser, LocalVideoTrack, RemoteAudioTrack, RemoteUser, RemoteVideoTrack, TrackBoundary, VERSION, applyRef, compareVersion, isPromise, listen, useAsyncEffect, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalCameraTrack, useLocalMicrophoneTrack, useNetworkQuality, usePublish, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };

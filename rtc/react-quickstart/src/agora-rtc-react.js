@@ -835,8 +835,15 @@ function usePublish(tracks, readyToPublish = true, client) {
     }
     const filterTracks = tracks.filter(Boolean);
     const baseCheck = (_track) => {
-      return compareVersion(AgoraRTC__default.default.VERSION, "4.18.1") >= 0 ? (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      const isSupport = compareVersion(AgoraRTC__default.default.VERSION, "4.18.1") >= 0;
+      if (!isSupport) {
+        const agoraRTCReactError = new AgoraRTCReactError(
+          "usePublish",
+          "please check your agora-rtc-sdk-ng version in package.json, it's recommend upgrade to >= 4.18.1"
+        );
+        agoraRTCReactError.log("warn");
+      }
+      return isSupport ? (
         // @ts-ignore
         resolvedClient.mode !== "live" || resolvedClient.role !== "audience"
       ) : true;
@@ -1053,28 +1060,6 @@ function LocalVideoTrack({
   }, [muted, track]);
   return /* @__PURE__ */ jsxRuntime.jsx("div", { ...props, ref: setDiv, style: mergedStyle });
 }
-function MicrophoneAudioTrack({
-  track: maybeTrack,
-  deviceId,
-  ...props
-}) {
-  const track = useAwaited(maybeTrack);
-  react.useEffect(() => {
-    if (track && deviceId != null) {
-      track.setDevice(deviceId).catch(console.warn);
-    }
-  }, [deviceId, track]);
-  return /* @__PURE__ */ jsxRuntime.jsx(LocalAudioTrack, { track: maybeTrack, ...props });
-}
-function CameraVideoTrack({ track: maybeTrack, deviceId, ...props }) {
-  const track = useAwaited(maybeTrack);
-  react.useEffect(() => {
-    if (track && deviceId != null) {
-      track.setDevice(deviceId).catch(console.warn);
-    }
-  }, [deviceId, track]);
-  return /* @__PURE__ */ jsxRuntime.jsx(LocalVideoTrack, { track: maybeTrack, ...props });
-}
 var CoverBlurStyle = {
   width: "100%",
   height: "100%",
@@ -1098,48 +1083,6 @@ function UserCover({ cover }) {
     /* @__PURE__ */ jsxRuntime.jsx("div", { style: { ...CoverBlurStyle, backgroundImage: `url(${cover})` } }),
     /* @__PURE__ */ jsxRuntime.jsx("img", { src: cover, style: CoverImgStyle })
   ] }) : cover() });
-}
-function LocalMicrophoneAndCameraUser({
-  micOn,
-  cameraOn,
-  audioTrack,
-  videoTrack,
-  playAudio,
-  playVideo,
-  micDeviceId,
-  cameraDeviceId,
-  volume,
-  cover,
-  children,
-  style,
-  ...props
-}) {
-  const mergedStyle = useMergedStyle(VideoTrackWrapperStyle, style);
-  playVideo = playVideo ?? !!cameraOn;
-  playAudio = playAudio ?? !!micOn;
-  return /* @__PURE__ */ jsxRuntime.jsxs("div", { ...props, style: mergedStyle, children: [
-    /* @__PURE__ */ jsxRuntime.jsx(
-      CameraVideoTrack,
-      {
-        deviceId: cameraDeviceId,
-        disabled: !cameraOn,
-        play: playVideo,
-        track: videoTrack
-      }
-    ),
-    /* @__PURE__ */ jsxRuntime.jsx(
-      MicrophoneAudioTrack,
-      {
-        deviceId: micDeviceId,
-        disabled: !micOn,
-        play: playAudio,
-        track: audioTrack,
-        volume
-      }
-    ),
-    cover && !cameraOn && /* @__PURE__ */ jsxRuntime.jsx(UserCover, { cover }),
-    /* @__PURE__ */ jsxRuntime.jsx("div", { style: FloatBoxStyle, children })
-  ] });
 }
 function LocalUser({
   micOn,
@@ -1221,27 +1164,6 @@ function RemoteUser({
     /* @__PURE__ */ jsxRuntime.jsx("div", { style: FloatBoxStyle, children })
   ] });
 }
-function RemoteVideoPlayer({
-  track,
-  playVideo,
-  cover,
-  client,
-  style,
-  children,
-  ...props
-}) {
-  const mergedStyle = useMergedStyle(VideoTrackWrapperStyle, style);
-  const resolvedClient = useRTCClient(client);
-  const hasVideo = resolvedClient.remoteUsers?.find(
-    (user) => user.uid === track?.getUserId()
-  )?.hasVideo;
-  playVideo = playVideo ?? hasVideo;
-  return /* @__PURE__ */ jsxRuntime.jsxs("div", { ...props, style: mergedStyle, children: [
-    /* @__PURE__ */ jsxRuntime.jsx(RemoteVideoTrack, { play: playVideo, track }),
-    cover && !playVideo && /* @__PURE__ */ jsxRuntime.jsx(UserCover, { cover }),
-    /* @__PURE__ */ jsxRuntime.jsx("div", { style: FloatBoxStyle, children })
-  ] });
-}
 var AgoraRTCReact = class {
   appType = 1001;
   constructor() {
@@ -1252,16 +1174,13 @@ new AgoraRTCReact();
 var VERSION = "1.1.0";
 
 exports.AgoraRTCProvider = AgoraRTCProvider;
+exports.AgoraRTCReactError = AgoraRTCReactError;
 exports.AgoraRTCScreenShareProvider = AgoraRTCScreenShareProvider;
-exports.CameraVideoTrack = CameraVideoTrack;
 exports.LocalAudioTrack = LocalAudioTrack;
-exports.LocalMicrophoneAndCameraUser = LocalMicrophoneAndCameraUser;
 exports.LocalUser = LocalUser;
 exports.LocalVideoTrack = LocalVideoTrack;
-exports.MicrophoneAudioTrack = MicrophoneAudioTrack;
 exports.RemoteAudioTrack = RemoteAudioTrack;
 exports.RemoteUser = RemoteUser;
-exports.RemoteVideoPlayer = RemoteVideoPlayer;
 exports.RemoteVideoTrack = RemoteVideoTrack;
 exports.TrackBoundary = TrackBoundary;
 exports.VERSION = VERSION;

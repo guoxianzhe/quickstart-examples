@@ -1,15 +1,14 @@
 import {
-  LocalMicrophoneAndCameraUser,
-  RemoteVideoPlayer,
+  LocalUser,
+  RemoteUser,
   useIsConnected,
   useJoin,
   useLocalMicrophoneTrack,
   useLocalCameraTrack,
   usePublish,
   useRemoteUsers,
-  useRemoteVideoTracks,
 } from "./agora-rtc-react";
-import React, { useState }  from 'react';
+import React, { useState } from "react";
 
 import "./styles.css";
 import agoraLogo from "./agora-logo.svg";
@@ -22,16 +21,14 @@ export const Basics = () => {
   const [token, setToken] = useState("");
 
   useJoin({appid: appId, channel: channel, token: token ? token : null}, calling);
-
   //local user
-  const [micOn, setMic] = useState(false);
-  const [cameraOn, setCamera] = useState(false);
+  const [micOn, setMic] = useState(true);
+  const [cameraOn, setCamera] = useState(true);
   const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
   const { localCameraTrack } = useLocalCameraTrack(cameraOn);
   usePublish([localMicrophoneTrack, localCameraTrack]);
   //remote users
   const remoteUsers = useRemoteUsers();
-  const { videoTracks } = useRemoteVideoTracks(remoteUsers);
 
   return (
     <>
@@ -39,28 +36,21 @@ export const Basics = () => {
         {isConnected ? (
           <div className="user-list">
             <div className="user">
-              <LocalMicrophoneAndCameraUser
+              <LocalUser
                 audioTrack={localMicrophoneTrack}
                 cameraOn={cameraOn}
-                cover={
-                  "https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg"
-                }
                 micOn={micOn}
                 videoTrack={localCameraTrack}
+                cover="https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg"
               >
                 <samp className="user-name">You</samp>
-              </LocalMicrophoneAndCameraUser>
+              </LocalUser>
             </div>
-            {videoTracks.map(track => (
-              <div className="user" key={track.getUserId()}>
-                <RemoteVideoPlayer
-                  cover={
-                    "https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg"
-                  }
-                  key={track.getUserId()}
-                  track={track}
-                />
-                <samp className="user-name">{track.getUserId()}</samp>
+            {remoteUsers.map((user) => (
+              <div className="user" key={user.uid}>
+                <RemoteUser cover="https://www.agora.io/en/wp-content/uploads/2022/10/3d-spatial-audio-icon.svg" user={user}>
+                  <samp className="user-name">{user.uid}</samp>
+                </RemoteUser>
               </div>
             ))}
           </div>

@@ -1102,98 +1102,6 @@ interface LocalVideoTrackProps extends HTMLProps<HTMLDivElement> {
  */
 declare function LocalVideoTrack({ track: maybeTrack, play, disabled, muted, style, ...props }: LocalVideoTrackProps): JSX.Element;
 
-interface MicrophoneAudioTrackProps extends LocalAudioTrackProps {
-    /**
-     * A microphone audio track which can be created by `createMicrophoneAudioTrack()`.
-     */
-    readonly track?: MaybePromiseOrNull<IMicrophoneAudioTrack>;
-    /**
-     * Device ID, which can be retrieved by calling `getDevices()`.
-     */
-    readonly deviceId?: string;
-    readonly children?: ReactNode;
-}
-/**
- * A component which renders a microphone audio track, with device options.
- *
- * ```jsx
- * const track = useMemo(() => AgoraRTC.createMicrophoneAudioTrack(), [])
- * return <MicrophoneAudioTrack track={track} play />
- * ```
- */
-declare function MicrophoneAudioTrack({ track: maybeTrack, deviceId, ...props }: MicrophoneAudioTrackProps): JSX.Element;
-
-interface CameraVideoTrackProps extends LocalVideoTrackProps {
-    /**
-     * A camera video track which can be created by `createCameraVideoTrack()`.
-     */
-    readonly track?: MaybePromiseOrNull<ICameraVideoTrack>;
-    /**
-     * Device ID, which can be retrieved by calling `getDevices()`.
-     */
-    readonly deviceId?: string;
-}
-/**
- * A component which renders a camera video track, with device options.
- *
- * ```jsx
- * const track = useMemo(() => AgoraRTC.createCameraVideoTrack(), [])
- * return <CameraVideoTrack track={track} play />
- * ```
- */
-declare function CameraVideoTrack({ track: maybeTrack, deviceId, ...props }: CameraVideoTrackProps): JSX.Element;
-
-interface LocalMicrophoneAndCameraUserProps extends HTMLProps<HTMLDivElement> {
-    /**
-     * Whether to turn on the local user's microphone. Default false.
-     */
-    readonly micOn?: boolean;
-    /**
-     * Whether to turn on the local user's camera. Default false.
-     */
-    readonly cameraOn?: boolean;
-    /**
-     * A microphone audio track which can be created by `createMicrophoneAudioTrack()`.
-     */
-    readonly audioTrack?: MaybePromiseOrNull<IMicrophoneAudioTrack>;
-    /**
-     * A camera video track which can be created by `createCameraVideoTrack()`.
-     */
-    readonly videoTrack?: MaybePromiseOrNull<ICameraVideoTrack>;
-    /**
-     * Whether to play the local user's audio track. Default follows `micOn`.
-     */
-    readonly playAudio?: boolean;
-    /**
-     * Whether to play the local user's video track. Default follows `cameraOn`.
-     */
-    readonly playVideo?: boolean;
-    /**
-     * Device ID, which can be retrieved by calling `getDevices()`.
-     */
-    readonly micDeviceId?: string;
-    /**
-     * Device ID, which can be retrieved by calling `getDevices()`.
-     */
-    readonly cameraDeviceId?: string;
-    /**
-     * The volume. The value ranges from 0 (mute) to 1000 (maximum). A value of 100 is the current volume.
-     */
-    readonly volume?: number;
-    /**
-     * Render cover image if playVideo is off.
-     */
-    readonly cover?: string;
-    /**
-     * Children is rendered on top of the video canvas.
-     */
-    readonly children?: ReactNode;
-}
-/**
- * Play/Stop local user camera and microphone track.
- */
-declare function LocalMicrophoneAndCameraUser({ micOn, cameraOn, audioTrack, videoTrack, playAudio, playVideo, micDeviceId, cameraDeviceId, volume, cover, children, style, ...props }: LocalMicrophoneAndCameraUserProps): JSX.Element;
-
 interface LocalUserProps extends HTMLProps<HTMLDivElement> {
     /**
      * Whether to turn on the local user's microphone. Default false.
@@ -1352,34 +1260,6 @@ declare function useAutoPlayVideoTrack(track: Nullable<IRemoteVideoTrack | ILoca
  */
 declare function useAutoPlayAudioTrack(track: Nullable<IRemoteAudioTrack | ILocalAudioTrack>, play?: boolean): void;
 
-interface RemoteVideoPlayerProps extends HTMLProps<HTMLDivElement> {
-    /**
-     * A remote track
-     */
-    readonly track?: IRemoteVideoTrack;
-    /**
-     * Whether to play the remote user's video track. Default follows `user.hasVideo`.
-     */
-    readonly playVideo?: boolean;
-    /**
-     * Render cover image if playVideo is off.
-     */
-    readonly cover?: string | (() => ReactNode);
-    /**
-     * Children is rendered on top of the video canvas.
-     */
-    readonly children?: ReactNode;
-    /**
-     * client instance
-     */
-    readonly client?: IAgoraRTCClient | null;
-}
-/**
- * Subscribe and play remote user video track.
- * An `IRemoteVideoTrack` can only be own by one `RemoteVideoPlayer`.
- */
-declare function RemoteVideoPlayer({ track, playVideo, cover, client, style, children, ...props }: RemoteVideoPlayerProps): JSX.Element;
-
 declare const VERSION = "1.1.0";
 
-export { AgoraRTCError, AgoraRTCProvider, AgoraRTCProviderProps, AgoraRTCScreenShareProvider, AgoraRTCScreenShareProviderProps, CameraVideoTrack, CameraVideoTrackProps, CheckVideoVisibleResult, FetchArgs, InspectState, JoinOptions, Listenable, LocalAudioTrack, LocalAudioTrackProps, LocalMicrophoneAndCameraUser, LocalMicrophoneAndCameraUserProps, LocalUser, LocalUserProps, LocalVideoTrack, LocalVideoTrackProps, MicrophoneAudioTrack, MicrophoneAudioTrackProps, NetworkQuality, RemoteAudioTrack, RemoteAudioTrackProps, RemoteUser, RemoteUserProps, RemoteVideoPlayer, RemoteVideoPlayerProps, RemoteVideoTrack, RemoteVideoTrackProps, TrackBoundary, VERSION, VisibleHiddenReason, applyRef, compareVersion, isPromise, listen, useAsyncEffect, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalCameraTrack, useLocalMicrophoneTrack, useNetworkQuality, usePublish, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };
+export { AgoraRTCError, AgoraRTCProvider, AgoraRTCProviderProps, AgoraRTCReactError, AgoraRTCScreenShareProvider, AgoraRTCScreenShareProviderProps, CheckVideoVisibleResult, FetchArgs, InspectState, JoinOptions, Listenable, LocalAudioTrack, LocalAudioTrackProps, LocalUser, LocalUserProps, LocalVideoTrack, LocalVideoTrackProps, NetworkQuality, RemoteAudioTrack, RemoteAudioTrackProps, RemoteUser, RemoteUserProps, RemoteVideoTrack, RemoteVideoTrackProps, TrackBoundary, VERSION, VisibleHiddenReason, applyRef, compareVersion, isPromise, listen, useAsyncEffect, useAutoPlayAudioTrack, useAutoPlayVideoTrack, useAwaited, useClientEvent, useConnectionState, useCurrentUID, useForceUpdate, useForwardRef, useIsConnected, useIsUnmounted, useIsomorphicLayoutEffect, useJoin, useLocalCameraTrack, useLocalMicrophoneTrack, useNetworkQuality, usePublish, useRTCClient, useRTCScreenShareClient, useRemoteAudioTracks, useRemoteUserTrack, useRemoteUsers, useRemoteVideoTracks, useSafePromise, useTrackEvent, useVolumeLevel };
