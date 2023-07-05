@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 
 import "./styles.css";
-import agoraLogo from "./agora-logo.svg";
+import logo from "./logo.png";
 
 export const Basics = () => {
   const [calling, setCalling] = useState(false);
@@ -56,7 +56,7 @@ export const Basics = () => {
           </div>
         ) : (
           <div className="join-room">
-            <img alt="agora-logo" className="logo" src={agoraLogo} />
+            <img alt="agora-logo" className="logo" src={logo} />
             <input
               onChange={e => setAppId(e.target.value)}
               placeholder="<Your app ID>"
