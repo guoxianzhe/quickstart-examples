@@ -7,7 +7,7 @@ import {
   useLocalCameraTrack,
   usePublish,
   useRemoteUsers,
-} from "./agora-rtc-react";
+} from "agora-rtc-react";
 import React, { useState } from "react";
 
 import "./styles.css";
